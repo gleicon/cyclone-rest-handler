@@ -5,10 +5,10 @@ from setuptools import setup, find_packages
 # python setup.py sdist
 # python setup.py register
 # python setup.py sdist upload
-# pip install tornado-rest-handler
-# pip install tornado-rest-handler --upgrade --no-deps
+# pip install cyclone-rest-handler
+# pip install cyclone-rest-handler --upgrade --no-deps
 # Manual upload to PypI
-# http://pypi.python.org/pypi/tornado-rest-handler
+# http://pypi.python.org/pypi/cyclone-rest-handler
 # Go to 'edit' link
 # Update version and save
 # Go to 'files' link and upload the file
@@ -20,12 +20,12 @@ tests_require = [
 install_requires = [
 ]
 
-setup(name='tornado-rest-handler',
-      url='https://github.com/paulocheque/tornado-rest-handler',
-      author="paulocheque",
-      author_email='paulocheque@gmail.com',
-      keywords='python tornado rest handler',
-      description='A simple Python Tornado handler that manage Rest requests automatically.',
+setup(name='cyclone-rest-handler',
+      url='https://github.com/gleicon/cyclone-rest-handler',
+      author="gleicon",
+      author_email='gleicon@gmail.com',
+      keywords='python cyclone rest handler',
+      description='A simple Python Cyclone handler that manage Rest requests automatically.',
       license='MIT',
       classifiers=[
           # 'Framework :: Tornado',
@@ -33,7 +33,7 @@ setup(name='tornado-rest-handler',
           'Topic :: Software Development'
       ],
 
-      version='0.0.5',
+      version='0.0.1',
       install_requires=install_requires,
       tests_require=tests_require,
       # test_suite='runtests.runtests',

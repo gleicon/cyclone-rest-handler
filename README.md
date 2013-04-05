@@ -1,9 +1,14 @@
-tornado-rest-handler
+cyclone-rest-handler
 ====================
 
-![Continuous Integration Status](https://secure.travis-ci.org/paulocheque/tornado-rest-handler.png)
+Cyclone-rest-handler was forked from [tornado-rest-handler](https://github.com/paulocheque/tornado-rest-handler)
+Everything is almost the same, except that you can mix twisted drivers and libraries due to cyclone.
+Use the rake stuff to get going: rake dev_env, rake tests etc.
+It probably wont work with python 3.3 etc 
 
-A simple Python Tornado handler that manage Rest requests automatically.
+From here below this is the original README adjusted to cyclone and butchered accordingly:
+
+A simple Python Cyclone handler that manage Rest requests automatically.
 
 * [Basic Example of Usage](#basic-example-of-usage)
   * [Routes](#routes)
@@ -39,11 +44,11 @@ One handler manage every Rest routes:
 
 * *Since HTML5-forms does not support PUT/DELETE, these additional POSTs were added.
 
-* To specify Tornado Rest routes you can use the method **rest_routes**:
+* To specify Cyclone Rest routes you can use the method **rest_routes**:
 
 
 ```python
-from tornado_rest_handler import routes, rest_routes
+from cyclone_rest_handler import routes, rest_routes
 
 TORNADO_ROUTES = [
     # another handlers here
@@ -55,7 +60,7 @@ TORNADO_ROUTES = [
 
 TORNADO_SETTINGS = {}
 
-application = tornado.web.Application(routes(TORNADO_ROUTES), **TORNADO_SETTINGS)
+application = cyclone.web.Application(routes(TORNADO_ROUTES), **TORNADO_SETTINGS)
 ```
 
 The library does not support auto-pluralization yet, so you may want to change the prefix:
@@ -76,7 +81,7 @@ Handlers
 All the get/post/put/delete methods are implemented for you, but if you want to customize some behavior, you write your own handler:
 
 ```python
-class AnimalHandler(tornado.web.RequestHandler):
+class AnimalHandler(cyclone.web.RequestHandler):
     pass # your custom methods here
 ```
 
@@ -89,7 +94,7 @@ rest_routes(Animal, handler=AnimalHandler),
 To create a RestHandler for your ORM you must override the RestHandler class and implement the following methods:
 
 ```python
-from tornado_rest_handler import RestHandler
+from cyclone_rest_handler import RestHandler
 
 class CouchDBRestHandler(RestHandler):
     def instance_list(self): return [] # it can return a list or a queryset etc
@@ -102,7 +107,7 @@ class CouchDBRestHandler(RestHandler):
 By default, the list page will show all models of that type. To filter by user or other properties, override the *instance_list* method:
 
 ```python
-class AnimalHandler(tornado.web.RequestHandler):
+class AnimalHandler(cyclone.web.RequestHandler):
     def instance_list(self):
         return Animal.objects.filter(...)
 ```
@@ -136,7 +141,7 @@ Installation
 ------------
 
 ```
-pip install tornado-rest-handler
+pip install cyclone-rest-handler
 ```
 
 #### or
@@ -147,72 +152,16 @@ pip install tornado-rest-handler
 3. Execute in the extracted directory: python setup.py install
 ```
 
-#### Development version
+#### Requirements/tested with
 
-```
-pip install -e git+git@github.com:paulocheque/tornado-rest-handler.git#egg=tornado-rest-handler
-```
+* Python 2.6 / 2.7 
+* Tested with latest cyclone
 
-#### requirements.txt
-
-```
-tornado-rest-handler==0.0.5
-# or use the development version
-git+git://github.com/paulocheque/tornado-rest-handler.git#egg=tornado-rest-handler
-```
-
-#### Upgrade:
-
-```
-pip install tornado-rest-handler --upgrade --no-deps
-```
-
-#### Requirements
-
-* Python 2.6 / 2.7 / 3.2 / 3.3
-* Tested with Tornado 2.4.1 and 3.0
-
-
-Change Log
--------------
-
-#### 0.0.5 (2013/04/01) (no lie!)
-* [new] Python3 is now supported
-* [test] Tested with Tornado 3.0 (compatible)
-
-#### 0.0.4 (2013/03/31)
-* [new] Passed validation errors (dict errors) to the edit template.
-* [new] New functions passed to edit template: has_errors, value_for and error_for.
-* [bugfix] Fixed bug that cause strange behavior when occurs validation errors.
-
-#### 0.0.3 (2013/03/31)
-* [new] CrudHandler extracted from RestHandler.
-* [new] Dynamic handlers with dynamic routes (rest_routes function).
-* [new] New redirect_pos_action attribute.
-* [new] Function routes added to facilitate routes integration.
-* [new] Method raise403 useful method in the handler.
-* [update] All attributes are now in lower case.
-* [update] Stronger uri discover algoritihm.
-* [update] Using only AssertionError exceptions.
-* [bugfix] Using redirects instead of rendering after actions.
-
-
-#### 0.0.2 (2013/03/30)
-* [update] RestHandler adapted to be used for other ORMs.
-* [new] MongoEngineRestHandler
-* [new] Template customization: LIST_TEMPLATE, EDIT_TEMPLATE, SHOW_TEMPLATE variables.
-* [update] Using OO instead of metaclasses for object list.
-* [update] Better exception to alert bad implementations.
-* [tests] Initial unit tests.
-
-#### 0.0.1 (2013/03/30)
-
-* [new] RestHandler for MongoEngine
 
 
 TODO
 -------------
-
+* test with more twisted ORM and db libraries - perhaps define an ORM simple standard
 * Handlers for another ORMs (other than MongoEngine).
 * Pagination
 * i18n

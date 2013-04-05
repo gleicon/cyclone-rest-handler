@@ -1,8 +1,8 @@
 # coding: utf-8
 import re
 
-import tornado.web
-import tornado.util
+import cyclone.web
+import cyclone.util
 
 
 class CrudHandlerMetaclass(type):
@@ -23,7 +23,7 @@ class CrudHandlerMetaclass(type):
         return result
 
 
-class CrudHandler(tornado.web.RequestHandler):
+class CrudHandler(cyclone.web.RequestHandler):
     model = None
     template_path = ''
     list_template = 'list.html'
@@ -35,10 +35,10 @@ class CrudHandler(tornado.web.RequestHandler):
         return super(CrudHandler, self).render(self.template_path + template_name, **kwargs)
 
     def raise403(self):
-        raise tornado.web.HTTPError(403, 'Not enough permissions to perform this action')
+        raise cyclone.web.HTTPError(403, 'Not enough permissions to perform this action')
 
     def raise404(self):
-        raise tornado.web.HTTPError(404, 'Object not found')
+        raise cyclone.web.HTTPError(404, 'Object not found')
 
     def get_request_data(self):
         data = {}
@@ -61,7 +61,7 @@ class CrudHandler(tornado.web.RequestHandler):
         errors = None
         if exception:
             alert = 'Data sent contains some issues.'
-            errors = tornado.util.ObjectDict()
+            errors = cyclone.util.ObjectDict()
             if hasattr(exception, 'to_dict'):
                 errors.update(**exception.to_dict())
         value_for = lambda field: getattr(instance, field, '') if getattr(instance, field, '') else ''
@@ -82,7 +82,7 @@ class CrudHandler(tornado.web.RequestHandler):
             self.save_instance(data)
             return self.redirect_with_message(message='Object added successfully.')
         except AssertionError as e:
-            instance = tornado.util.ObjectDict()
+            instance = cyclone.util.ObjectDict()
             instance.update(**data)
             return self.page_edit(instance, exception=e)
 

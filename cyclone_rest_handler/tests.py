@@ -1,7 +1,7 @@
 # coding: utf-8
 import unittest
 
-from tornado_rest_handler import *
+from cyclone_rest_handler import *
 
 
 class RestHandlerMetaclassTests(unittest.TestCase):
